@@ -1,0 +1,77 @@
+{
+  "security_fee": {
+    "description": "if luggage weight in [45.3, 50.0), charge is 0 \u00d7 luggage weight; if luggage weight in [12.0, 45.3), charge is 1 \u00d7 luggage weight; if luggage weight in [5.0, 12.0), charge is 2 \u00d7 luggage weight The variable 'luggage weight' is measured in kg.",
+    "code": "def compute_charge(baggage_weight):\n    if 45.3 <= baggage_weight < 50.0: return 0 * baggage_weight\n    elif 12.0 <= baggage_weight < 45.3: return 1 * baggage_weight\n    elif 5.0 <= baggage_weight < 12.0: return 2 * baggage_weight\n    else: raise ValueError(f'baggage_weight is out of expected range')",
+    "variables_used": [
+      "baggage_weight"
+    ],
+    "synonyms": [
+      "security charge",
+      "safety fee"
+    ],
+    "charge_description": "A fee charged for security measures at the airport."
+  },
+  "landing_fee": {
+    "description": "landing_fee conditions by flight class and fuel burn:\n\nfor domestic the following charges apply:\n  - if fuel burn in [4144.7, 5000.0), charge is 0.0 \u00d7 fuel burn\n  - if fuel burn in [2025.4, 4144.7), charge is 1.0 \u00d7 fuel burn\n  - if fuel burn in [1040.1, 2025.4), charge is 2.0 \u00d7 fuel burn\n  - if fuel burn in [500.0, 1040.1), charge is 3.0 \u00d7 fuel burn\nfor international the following charges apply:\n  - if fuel burn in [4144.7, 5000.0), charge is 0.0 \u00d7 fuel burn\n  - if fuel burn in [2025.4, 4144.7), charge is 1.1 \u00d7 fuel burn\n  - if fuel burn in [1040.1, 2025.4), charge is 2.2 \u00d7 fuel burn\n  - if fuel burn in [500.0, 1040.1), charge is 3.3 \u00d7 fuel burn\nfor charter the following charges apply:\n  - if fuel burn in [4144.7, 5000.0), charge is 0.0 \u00d7 fuel burn\n  - if fuel burn in [2025.4, 4144.7), charge is 1.2 \u00d7 fuel burn\n  - if fuel burn in [1040.1, 2025.4), charge is 2.4 \u00d7 fuel burn\n  - if fuel burn in [500.0, 1040.1), charge is 3.6 \u00d7 fuel burn",
+    "code": "def compute_charge(flight_type, fuel_consumption):\n    if flight_type == 'domestic' and 4144.7 <= fuel_consumption < 5000.0: return 0 * fuel_consumption * 1.0\n    elif flight_type == 'domestic' and 2025.4 <= fuel_consumption < 4144.7: return 1 * fuel_consumption * 1.0\n    elif flight_type == 'domestic' and 1040.1 <= fuel_consumption < 2025.4: return 2 * fuel_consumption * 1.0\n    elif flight_type == 'domestic' and 500.0 <= fuel_consumption < 1040.1: return 3 * fuel_consumption * 1.0\n    elif flight_type == 'international' and 4144.7 <= fuel_consumption < 5000.0: return 0 * fuel_consumption * 1.1\n    elif flight_type == 'international' and 2025.4 <= fuel_consumption < 4144.7: return 1 * fuel_consumption * 1.1\n    elif flight_type == 'international' and 1040.1 <= fuel_consumption < 2025.4: return 2 * fuel_consumption * 1.1\n    elif flight_type == 'international' and 500.0 <= fuel_consumption < 1040.1: return 3 * fuel_consumption * 1.1\n    elif flight_type == 'charter' and 4144.7 <= fuel_consumption < 5000.0: return 0 * fuel_consumption * 1.2\n    elif flight_type == 'charter' and 2025.4 <= fuel_consumption < 4144.7: return 1 * fuel_consumption * 1.2\n    elif flight_type == 'charter' and 1040.1 <= fuel_consumption < 2025.4: return 2 * fuel_consumption * 1.2\n    elif flight_type == 'charter' and 500.0 <= fuel_consumption < 1040.1: return 3 * fuel_consumption * 1.2\n    else: raise ValueError(f'flight_type or fuel_consumption is out of expected range')",
+    "variables_used": [
+      "flight_type",
+      "fuel_consumption"
+    ],
+    "synonyms": [
+      "landing charge",
+      "arrival fee"
+    ],
+    "charge_description": "A fee charged for landing the aircraft at the airport."
+  },
+  "fuel_tax": {
+    "description": "fuel_tax conditions by flight category and plane weight:\n\nfor domestic the following charges apply:\n  - if plane weight in [5000.0, 207460.8), charge is 0.0 \u00d7 plane weight\n  - if plane weight in [207460.8, 400000.0), charge is 1.0 \u00d7 plane weight\nfor international the following charges apply:\n  - if plane weight in [5000.0, 207460.8), charge is 0.0 \u00d7 plane weight\n  - if plane weight in [207460.8, 400000.0), charge is 1.1 \u00d7 plane weight\nfor charter the following charges apply:\n  - if plane weight in [5000.0, 207460.8), charge is 0.0 \u00d7 plane weight\n  - if plane weight in [207460.8, 400000.0), charge is 1.2 \u00d7 plane weight",
+    "code": "def compute_charge(flight_type, aircraft_weight):\n    if flight_type == 'domestic' and 5000.0 <= aircraft_weight < 207460.8: return 0 * aircraft_weight * 1.0\n    elif flight_type == 'domestic' and 207460.8 <= aircraft_weight < 400000.0: return 1 * aircraft_weight * 1.0\n    elif flight_type == 'international' and 5000.0 <= aircraft_weight < 207460.8: return 0 * aircraft_weight * 1.1\n    elif flight_type == 'international' and 207460.8 <= aircraft_weight < 400000.0: return 1 * aircraft_weight * 1.1\n    elif flight_type == 'charter' and 5000.0 <= aircraft_weight < 207460.8: return 0 * aircraft_weight * 1.2\n    elif flight_type == 'charter' and 207460.8 <= aircraft_weight < 400000.0: return 1 * aircraft_weight * 1.2\n    else: raise ValueError(f'flight_type or aircraft_weight is out of expected range')",
+    "variables_used": [
+      "flight_type",
+      "aircraft_weight"
+    ],
+    "synonyms": [
+      "fuel charge",
+      "fuel levy"
+    ],
+    "charge_description": "A tax applied to the fuel consumed by the aircraft."
+  },
+  "baggage_fee": {
+    "description": "if baggage mass in [25.1, 50.0), charge is 0 \u00d7 baggage mass; if baggage mass in [5.0, 25.1), charge is 1 \u00d7 baggage mass The variable 'baggage mass' is measured in kg.",
+    "code": "def compute_charge(baggage_weight):\n    if 25.1 <= baggage_weight < 50.0: return 0 * baggage_weight\n    elif 5.0 <= baggage_weight < 25.1: return 1 * baggage_weight\n    else: raise ValueError(f'baggage_weight is out of expected range')",
+    "variables_used": [
+      "baggage_weight"
+    ],
+    "synonyms": [
+      "luggage charge",
+      "baggage levy"
+    ],
+    "charge_description": "A fee charged for the baggage carried by passengers."
+  },
+  "passenger_service_fee": {
+    "description": "if plane type is 'military', charge is 0; if plane type is 'passenger', charge is 1; if plane type is 'cargo', charge is 2; if plane type is 'private', charge is 3",
+    "code": "def compute_charge(aircraft_type):\n    if aircraft_type == 'military': return 0\n    elif aircraft_type == 'passenger': return 1\n    elif aircraft_type == 'cargo': return 2\n    elif aircraft_type == 'private': return 3\n    else: raise ValueError(f'Unknown value for aircraft_type: {aircraft_type}')",
+    "variables_used": [
+      "aircraft_type"
+    ],
+    "synonyms": [
+      "passenger charge",
+      "service fee"
+    ],
+    "charge_description": "A fee charged for services provided to passengers at the airport."
+  },
+  "airport_facility_fee": {
+    "description": "if plane type is 'private', charge is 0; if plane type is 'passenger', charge is 1; if plane type is 'military', charge is 2; if plane type is 'cargo', charge is 3",
+    "code": "def compute_charge(aircraft_type):\n    if aircraft_type == 'private': return 0\n    elif aircraft_type == 'passenger': return 1\n    elif aircraft_type == 'military': return 2\n    elif aircraft_type == 'cargo': return 3\n    else: raise ValueError(f'Unknown value for aircraft_type: {aircraft_type}')",
+    "variables_used": [
+      "aircraft_type"
+    ],
+    "synonyms": [
+      "facility charge",
+      "airport usage fee"
+    ],
+    "charge_description": "A fee charged for the use of airport facilities."
+  },
+  "run_id": "2025-08-08_11-47-52"
+}

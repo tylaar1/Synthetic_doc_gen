@@ -1,0 +1,76 @@
+{
+  "security_fee": {
+    "description": "if baggage mass in [5.0, 9.9), charge is 0 \u00d7 baggage mass; if baggage mass in [9.9, 13.3), charge is 1 \u00d7 baggage mass; if baggage mass in [13.3, 50.0), charge is 2 \u00d7 baggage mass The variable 'baggage mass' is measured in kg.",
+    "code": "def compute_charge(baggage_weight):\n    if 5.0 <= baggage_weight < 9.9: return 0 * baggage_weight\n    elif 9.9 <= baggage_weight < 13.3: return 1 * baggage_weight\n    elif 13.3 <= baggage_weight < 50.0: return 2 * baggage_weight\n    else: raise ValueError(f'baggage_weight is out of expected range')",
+    "variables_used": [
+      "baggage_weight"
+    ],
+    "synonyms": [
+      "security charge",
+      "safety fee"
+    ],
+    "charge_description": "A fee charged for security measures at the airport."
+  },
+  "landing_fee": {
+    "description": "if flight class is 'international', charge is 0; if flight class is 'charter', charge is 1; if flight class is 'domestic', charge is 2",
+    "code": "def compute_charge(flight_type):\n    if flight_type == 'international': return 0\n    elif flight_type == 'charter': return 1\n    elif flight_type == 'domestic': return 2\n    else: raise ValueError(f'Unknown value for flight_type: {flight_type}')",
+    "variables_used": [
+      "flight_type"
+    ],
+    "synonyms": [
+      "landing charge",
+      "arrival fee"
+    ],
+    "charge_description": "A fee charged for landing the aircraft at the airport."
+  },
+  "fuel_tax": {
+    "description": "if fuel usage in [3404.9, 5000.0), charge is 0 \u00d7 fuel usage; if fuel usage in [3074.5, 3404.9), charge is 1 \u00d7 fuel usage; if fuel usage in [2033.1, 3074.5), charge is 2 \u00d7 fuel usage; if fuel usage in [500.0, 2033.1), charge is 3 \u00d7 fuel usage The variable 'fuel usage' is measured in liters.",
+    "code": "def compute_charge(fuel_consumption):\n    if 3404.9 <= fuel_consumption < 5000.0: return 0 * fuel_consumption\n    elif 3074.5 <= fuel_consumption < 3404.9: return 1 * fuel_consumption\n    elif 2033.1 <= fuel_consumption < 3074.5: return 2 * fuel_consumption\n    elif 500.0 <= fuel_consumption < 2033.1: return 3 * fuel_consumption\n    else: raise ValueError(f'fuel_consumption is out of expected range')",
+    "variables_used": [
+      "fuel_consumption"
+    ],
+    "synonyms": [
+      "fuel charge",
+      "fuel levy"
+    ],
+    "charge_description": "A tax applied to the fuel consumed by the aircraft."
+  },
+  "baggage_fee": {
+    "description": "baggage_fee conditions by aircraft category and baggage mass:\n\nfor passenger the following charges apply:\n  - if baggage mass in [5.0, 20.2), charge is 0.0 \u00d7 baggage mass\n  - if baggage mass in [20.2, 21.2), charge is 1.0 \u00d7 baggage mass\n  - if baggage mass in [21.2, 36.1), charge is 2.0 \u00d7 baggage mass\n  - if baggage mass in [36.1, 50.0), charge is 3.0 \u00d7 baggage mass\nfor cargo the following charges apply:\n  - if baggage mass in [5.0, 20.2), charge is 0.0 \u00d7 baggage mass\n  - if baggage mass in [20.2, 21.2), charge is 1.1 \u00d7 baggage mass\n  - if baggage mass in [21.2, 36.1), charge is 2.2 \u00d7 baggage mass\n  - if baggage mass in [36.1, 50.0), charge is 3.3 \u00d7 baggage mass\nfor private the following charges apply:\n  - if baggage mass in [5.0, 20.2), charge is 0.0 \u00d7 baggage mass\n  - if baggage mass in [20.2, 21.2), charge is 1.2 \u00d7 baggage mass\n  - if baggage mass in [21.2, 36.1), charge is 2.4 \u00d7 baggage mass\n  - if baggage mass in [36.1, 50.0), charge is 3.6 \u00d7 baggage mass\nfor military the following charges apply:\n  - if baggage mass in [5.0, 20.2), charge is 0.0 \u00d7 baggage mass\n  - if baggage mass in [20.2, 21.2), charge is 1.3 \u00d7 baggage mass\n  - if baggage mass in [21.2, 36.1), charge is 2.6 \u00d7 baggage mass\n  - if baggage mass in [36.1, 50.0), charge is 3.9 \u00d7 baggage mass",
+    "code": "def compute_charge(aircraft_type, baggage_weight):\n    if aircraft_type == 'passenger' and 5.0 <= baggage_weight < 20.2: return 0 * baggage_weight * 1.0\n    elif aircraft_type == 'passenger' and 20.2 <= baggage_weight < 21.2: return 1 * baggage_weight * 1.0\n    elif aircraft_type == 'passenger' and 21.2 <= baggage_weight < 36.1: return 2 * baggage_weight * 1.0\n    elif aircraft_type == 'passenger' and 36.1 <= baggage_weight < 50.0: return 3 * baggage_weight * 1.0\n    elif aircraft_type == 'cargo' and 5.0 <= baggage_weight < 20.2: return 0 * baggage_weight * 1.1\n    elif aircraft_type == 'cargo' and 20.2 <= baggage_weight < 21.2: return 1 * baggage_weight * 1.1\n    elif aircraft_type == 'cargo' and 21.2 <= baggage_weight < 36.1: return 2 * baggage_weight * 1.1\n    elif aircraft_type == 'cargo' and 36.1 <= baggage_weight < 50.0: return 3 * baggage_weight * 1.1\n    elif aircraft_type == 'private' and 5.0 <= baggage_weight < 20.2: return 0 * baggage_weight * 1.2\n    elif aircraft_type == 'private' and 20.2 <= baggage_weight < 21.2: return 1 * baggage_weight * 1.2\n    elif aircraft_type == 'private' and 21.2 <= baggage_weight < 36.1: return 2 * baggage_weight * 1.2\n    elif aircraft_type == 'private' and 36.1 <= baggage_weight < 50.0: return 3 * baggage_weight * 1.2\n    elif aircraft_type == 'military' and 5.0 <= baggage_weight < 20.2: return 0 * baggage_weight * 1.3\n    elif aircraft_type == 'military' and 20.2 <= baggage_weight < 21.2: return 1 * baggage_weight * 1.3\n    elif aircraft_type == 'military' and 21.2 <= baggage_weight < 36.1: return 2 * baggage_weight * 1.3\n    elif aircraft_type == 'military' and 36.1 <= baggage_weight < 50.0: return 3 * baggage_weight * 1.3\n    else: raise ValueError(f'aircraft_type or baggage_weight is out of expected range')",
+    "variables_used": [
+      "aircraft_type",
+      "baggage_weight"
+    ],
+    "synonyms": [
+      "luggage charge",
+      "baggage levy"
+    ],
+    "charge_description": "A fee charged for the baggage carried by passengers."
+  },
+  "passenger_service_fee": {
+    "description": "passenger_service_fee conditions by aircraft category and traveler count:\n\nfor passenger the following charges apply:\n  - if traveler count in [29, 500), charge is 0 \u00d7 traveler count\n  - if traveler count in [10, 29), charge is 1 \u00d7 traveler count\nfor cargo the following charges apply:\n  - if traveler count in [29, 500), charge is 0 \u00d7 traveler count\n  - if traveler count in [10, 29), charge is 2 \u00d7 traveler count\nfor private the following charges apply:\n  - if traveler count in [29, 500), charge is 0 \u00d7 traveler count\n  - if traveler count in [10, 29), charge is 3 \u00d7 traveler count\nfor military the following charges apply:\n  - if traveler count in [29, 500), charge is 0 \u00d7 traveler count\n  - if traveler count in [10, 29), charge is 4 \u00d7 traveler count",
+    "code": "def compute_charge(aircraft_type, passenger_count):\n    if aircraft_type == 'passenger' and 29 <= passenger_count < 500: return 0 * passenger_count * 1\n    elif aircraft_type == 'passenger' and 10 <= passenger_count < 29: return 1 * passenger_count * 1\n    elif aircraft_type == 'cargo' and 29 <= passenger_count < 500: return 0 * passenger_count * 2\n    elif aircraft_type == 'cargo' and 10 <= passenger_count < 29: return 1 * passenger_count * 2\n    elif aircraft_type == 'private' and 29 <= passenger_count < 500: return 0 * passenger_count * 3\n    elif aircraft_type == 'private' and 10 <= passenger_count < 29: return 1 * passenger_count * 3\n    elif aircraft_type == 'military' and 29 <= passenger_count < 500: return 0 * passenger_count * 4\n    elif aircraft_type == 'military' and 10 <= passenger_count < 29: return 1 * passenger_count * 4\n    else: raise ValueError(f'aircraft_type or passenger_count is out of expected range')",
+    "variables_used": [
+      "aircraft_type",
+      "passenger_count"
+    ],
+    "synonyms": [
+      "passenger charge",
+      "service fee"
+    ],
+    "charge_description": "A fee charged for services provided to passengers at the airport."
+  },
+  "airport_facility_fee": {
+    "description": "if aircraft category is 'military', charge is 0; if aircraft category is 'cargo', charge is 1; if aircraft category is 'passenger', charge is 2; if aircraft category is 'private', charge is 3",
+    "code": "def compute_charge(aircraft_type):\n    if aircraft_type == 'military': return 0\n    elif aircraft_type == 'cargo': return 1\n    elif aircraft_type == 'passenger': return 2\n    elif aircraft_type == 'private': return 3\n    else: raise ValueError(f'Unknown value for aircraft_type: {aircraft_type}')",
+    "variables_used": [
+      "aircraft_type"
+    ],
+    "synonyms": [
+      "facility charge",
+      "airport usage fee"
+    ],
+    "charge_description": "A fee charged for the use of airport facilities."
+  }
+}
